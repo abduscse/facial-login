@@ -7,8 +7,7 @@ routes = [
         }
     },
     { method: 'POST', path: '/register', handler: ediService.register },
-    { method: 'POST', path: '/login', handler: ediService.login },
-    { method: 'POST', path: '/check', handler: ediService.check }
+    { method: 'POST', path: '/login', handler: ediService.login }
 ];
 
 module.exports = routes;
