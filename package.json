@@ -1,0 +1,22 @@
+{
+  "name": "facial-login-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://AG60618@bitbucket.anthem.com/scm/~ag60618/edi-service.git"
+  },
+  "author": "abdus",
+  "license": "ISC",
+  "dependencies": {
+    "@azure/cognitiveservices-face": "^4.2.0",
+    "@azure/ms-rest-js": "^2.6.0",
+    "@hapi/hapi": "^20.1.5",
+    "joi": "^17.4.2"
+  },
+  "devDependencies": {}
+}
