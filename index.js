@@ -2,16 +2,20 @@
 
 const Hapi = require('@hapi/hapi');
 const routes = require('./routes');
-const init = async () => {
+const config = require('config');
+const mongoose = require('mongoose');
 
-    const server = Hapi.server({
-        port: 3000,
-        host: 'localhost'
-    });
-    server.route(routes);
+const init = () => {
+    const connectionString = 'mongodb://' + config.get('database.host') + ':' + config.get('database.port') + '/' + config.get('database.name');
+    mongoose.connect(connectionString).then(async () => {
+        console.log(config.get('database.name') + ' DB Connected', 'Status: ' + mongoose.connection.readyState);
 
-    await server.start();
-    console.log('Server running on', server.info.uri);
+        const server = Hapi.server(config.get('service'));
+        server.route(routes);
+        await server.start();
+        console.log('Server running on', server.info.uri);
+
+    }).catch(err => console.log(err));
 };
 
 process.on('unhandledRejection', (err) => {

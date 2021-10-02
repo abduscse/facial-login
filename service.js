@@ -1,7 +1,7 @@
 const faceApi = require('./face-api');
 const boom = require('@hapi/boom');
 const users = require('./users');
-const config = require('./config');
+const constants = require('./constants');
 
 async function register(request, h) {
     console.log('User registration start');
@@ -12,11 +12,11 @@ async function register(request, h) {
     if (detectedFaces.length === 1) {
         const user = {
             faceId: detectedFaces[0].faceId,
-            userEmail: request.query.email
+            email: request.query.email
         };
-        users.addUser(user);
+        await users.saveUser(user);
         console.log('User registration Successful');
-        return { userEmail: user.userEmail, message: 'User Registration Successful!' };
+        return { email: user.email, message: 'User Registration Successful!' };
     } else {
         console.log('User registration Failed');
         throw boom.badRequest('Invalid Image!');
@@ -38,19 +38,19 @@ async function login(request, h) {
             console.log('Face Verification start');
             const verificationResponse = await faceApi.verifyFaceToFace(faceId1, faceId2);
             console.log('Face Verification end');
-            if (verificationResponse.isIdentical && verificationResponse.confidence >= config.FACE_API_CONFIDENCE_THRESHOLD) {
+            if (verificationResponse.isIdentical && verificationResponse.confidence >= constants.FACE_API_CONFIDENCE_THRESHOLD) {
                 console.log('User Login Successful');
-                return { userEmail: user.userEmail, message: 'User Login Successful!' };
+                return { email: user.email, message: 'User Login Successful!' };
             } else {
-                console.log('user login failed1');
+                console.log('user login failed');
                 throw boom.badRequest('Invalid Image!');
             }
         } else {
-            console.log('user login failed2');
+            console.log('user login failed');
             throw boom.badRequest('Invalid Image!');
         }
     } else {
-        console.log('user login failed3');
+        console.log('user login failed');
         throw boom.notFound('Invalid User!');
     }
 }

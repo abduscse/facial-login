@@ -1,9 +1,9 @@
 const msRest = require('@azure/ms-rest-js');
 const faceApi = require('@azure/cognitiveservices-face');
-const config = require('./config');
+const constants = require('./constants');
 
-const credentials = new msRest.ApiKeyCredentials({ inHeader: { 'Ocp-Apim-Subscription-Key': config.FACE_API_KEY } });
-const client = new faceApi.FaceClient(credentials, config.FACE_API_HOST);
+const credentials = new msRest.ApiKeyCredentials({ inHeader: { 'Ocp-Apim-Subscription-Key': constants.FACE_API_KEY } });
+const client = new faceApi.FaceClient(credentials, constants.FACE_API_HOST);
 
 async function detectWithStream(stream) {
     return await client.face.detectWithStream(stream);

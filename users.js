@@ -1,34 +1,17 @@
-const users = [
-    {
-        faceId: '1234',
-        userEmail: 'abdus@gmail.com',
-    }
-];
+const mongoose = require('mongoose');
+const userSchema = new mongoose.Schema({
+    faceId: String,
+    email: String
+});
+const userModel = mongoose.model('users', userSchema);
 
-function addUser(user) {
-    console.log('save user start');
-    users.push(user);
-    console.log('save user end');
-    return user;
+function saveUser(user) {
+    return new userModel(user).save();
 }
-
-function getUser(userEmail) {
-    console.log('get user start');
-    const user = users.find(user => user.userEmail === userEmail);
-    if (user) {
-        console.log('user exists');
-    } else {
-        console.log('user does not exists');
-    }
-    return user;
-}
-
-function getAllUsers() {
-    return users;
+function getUser(email) {
+    return userModel.findOne({ email });
 }
 
 module.exports = {
-    addUser,
-    getUser,
-    getAllUsers
+    saveUser, getUser
 };

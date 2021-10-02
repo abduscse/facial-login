@@ -16,7 +16,9 @@
     "@azure/cognitiveservices-face": "^4.2.0",
     "@azure/ms-rest-js": "^2.6.0",
     "@hapi/hapi": "^20.1.5",
-    "joi": "^17.4.2"
+    "config": "^3.3.6",
+    "joi": "^17.4.2",
+    "mongoose": "^6.0.8"
   },
   "devDependencies": {}
 }
