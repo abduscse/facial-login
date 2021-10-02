@@ -5,22 +5,30 @@ const constants = require('./constants');
 
 async function register(request, h) {
     console.log('User registration start');
-    const image = Buffer.from(request.payload);
-    console.log('Face Detection Start');
-    const detectedFaces = await faceApi.detectWithStream(image);
-    console.log('Face Detection end');
-    if (detectedFaces.length === 1) {
-        const user = {
-            faceId: detectedFaces[0].faceId,
-            email: request.query.email
-        };
-        await users.saveUser(user);
-        console.log('User registration Successful');
-        return { email: user.email, message: 'User Registration Successful!' };
+    const email = request.query.email;
+    const user = await users.getUser(email);
+    if (!user) {
+        const image = Buffer.from(request.payload);
+        console.log('Face Detection Start');
+        const detectedFaces = await faceApi.detectWithStream(image);
+        console.log('Face Detection end');
+        if (detectedFaces.length === 1) {
+            const user = {
+                faceId: detectedFaces[0].faceId,
+                email: request.query.email
+            };
+            await users.saveUser(user);
+            console.log('User registration Successful');
+            return { email: user.email, message: 'User Registration Successful!' };
+        } else {
+            console.log('User registration Failed');
+            throw boom.badRequest('Invalid Image!');
+        }
     } else {
-        console.log('User registration Failed');
-        throw boom.badRequest('Invalid Image!');
+        console.log('user registration failed');
+        throw boom.badRequest('User already exists!');
     }
+
 }
 async function login(request, h) {
     console.log('user login start');
