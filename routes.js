@@ -12,13 +12,13 @@ routes = [
         options: {
             validate: {
                 query: joi.object({
-                    email: joi.string().required()
+                    email: joi.string().email().required()
                 }),
                 payload: joi.object().required()
             },
             response: {
                 schema: joi.object({
-                    email: joi.string().required(),
+                    email: joi.string().email().required(),
                     message: joi.string().required()
                 }).required(),
                 failAction: 'log'
