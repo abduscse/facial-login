@@ -17,6 +17,7 @@
     "@azure/ms-rest-js": "^2.6.0",
     "@hapi/hapi": "^20.1.5",
     "config": "^3.3.6",
+    "face-api.js": "^0.22.2",
     "joi": "^17.4.2",
     "mongoose": "^6.0.8"
   },

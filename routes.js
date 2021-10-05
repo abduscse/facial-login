@@ -1,4 +1,5 @@
 const ediService = require('./service');
+const faceApiService = require('./face-api-service');
 const joi = require('joi');
 routes = [
     {
@@ -37,6 +38,24 @@ routes = [
             response: {
                 schema: joi.object({
                     email: joi.string().required(),
+                    message: joi.string().required()
+                }).required(),
+                failAction: 'log'
+            }
+        }
+    },
+    {
+        method: 'POST', path: '/face-api-register', handler: faceApiService.register,
+        options: {
+            validate: {
+                payload: joi.object({
+                    email: joi.string().email().required(),
+                    imageELement: joi.object().required()
+                }).required()
+            },
+            response: {
+                schema: joi.object({
+                    email: joi.string().email().required(),
                     message: joi.string().required()
                 }).required(),
                 failAction: 'log'
