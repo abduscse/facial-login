@@ -50,7 +50,7 @@ routes = [
             validate: {
                 payload: joi.object({
                     email: joi.string().email().required(),
-                    imageELement: joi.object().required()
+                    imageELement: joi.object()
                 }).required()
             },
             response: {
