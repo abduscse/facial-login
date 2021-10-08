@@ -21,14 +21,13 @@ async function register(request, h) {
             console.log('User registration Successful');
             return { email: user.email, message: 'User Registration Successful!' };
         } else {
-            console.log('User registration Failed');
+            console.log('Invalid Image!', 'user registration failed');
             throw boom.badRequest('Invalid Image!');
         }
     } else {
-        console.log('user registration failed');
+        console.log('User already exists!', 'user registration failed');
         throw boom.badRequest('User already exists!');
     }
-
 }
 async function login(request, h) {
     console.log('user login start');
@@ -50,15 +49,15 @@ async function login(request, h) {
                 console.log('User Login Successful');
                 return { email: user.email, message: 'User Login Successful!' };
             } else {
-                console.log('user login failed');
+                console.log('Invalid Image!', 'user login failed');
                 throw boom.badRequest('Invalid Image!');
             }
         } else {
-            console.log('user login failed');
+            console.log('Invalid Image!', 'user login failed');
             throw boom.badRequest('Invalid Image!');
         }
     } else {
-        console.log('user login failed');
+        console.log('Invalid Image!', 'user login failed');
         throw boom.notFound('Invalid User!');
     }
 }
