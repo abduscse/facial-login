@@ -49,8 +49,8 @@ async function login(request, h) {
                 console.log('User Login Successful');
                 return { email: user.email, message: 'User Login Successful!' };
             } else {
-                console.log('Invalid Image!', 'user login failed');
-                throw boom.badRequest('Invalid Image!');
+                console.log('Face not matched!', 'user login failed');
+                throw boom.badRequest('Face not matched!');
             }
         } else {
             console.log('Invalid Image!', 'user login failed');
