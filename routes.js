@@ -1,4 +1,5 @@
-const ediService = require('./service');
+const azureService = require('./azure-service');
+const faceApiJsService = require('./face-api-service');
 const joi = require('joi');
 routes = [
     {
@@ -8,7 +9,7 @@ routes = [
         }
     },
     {
-        method: 'POST', path: '/register', handler: ediService.register,
+        method: 'POST', path: '/register', handler: azureService.register,
         options: {
             validate: {
                 query: joi.object({
@@ -26,7 +27,7 @@ routes = [
         }
     },
     {
-        method: 'POST', path: '/login', handler: ediService.login,
+        method: 'POST', path: '/login', handler: azureService.login,
         options: {
             validate: {
                 query: joi.object({
@@ -37,6 +38,24 @@ routes = [
             response: {
                 schema: joi.object({
                     email: joi.string().required(),
+                    message: joi.string().required()
+                }).required(),
+                failAction: 'log'
+            }
+        }
+    },
+    {
+        method: 'POST', path: '/face-api-register', handler: faceApiJsService.register,
+        options: {
+            validate: {
+                payload: joi.object({
+                    email: joi.string().email().required(),
+                    imageElement: joi.object().required()
+                }).required()
+            },
+            response: {
+                schema: joi.object({
+                    email: joi.string().email().required(),
                     message: joi.string().required()
                 }).required(),
                 failAction: 'log'
